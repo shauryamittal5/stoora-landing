@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stoora — Your whole business. Built by AI in 10 minutes.</title>
+<meta name="description" content="Stoora turns your Instagram into a live store — catalog, UPI checkout, GST invoices and WhatsApp updates included. Join the waitlist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bricolage+Grotesque:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=Yellowtail&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F7F4EF;
+    --ink:#141118;
+    --indigo:#2B2E6B;
+    --indigo-band:#F5F3FF;
+    --indigo-card:#FFFFFF;
+    --orange:#FF6B2C;
+    --orange-deep:#D9480F;   /* orange for small text on light surfaces (AA) */
+    --amber:#FFB347;
+    --magenta:#C13FA8;
+    --cream:#FFF6ED;
+    --text-soft:rgba(20,17,24,.68);
+    --line:rgba(20,17,24,.10);
+    --line-strong:rgba(20,17,24,.16);
+    --line-light:#ECE4DA;    /* borders inside light UI (phone, receipts, pricing) */
+    --whats:#1A9E52;
+    --grad-sunrise:linear-gradient(100deg,#FFB347,#FF6B2C 45%,#C13FA8);
+    --grad-dusk:linear-gradient(100deg,#FF6B2C,#7A2E8F 55%,#2B2E6B);
+    --grad-cream-heat:linear-gradient(100deg,#FFF6ED,#FFB347 40%,#FF6B2C);
+    --display:"Bricolage Grotesque",sans-serif;
+    --body:"Space Grotesk",sans-serif;
+    --mono:"IBM Plex Mono",monospace;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+  ::selection{background:var(--orange);color:#fff}
+  h1,h2,h3{font-family:var(--display);line-height:1.06;letter-spacing:-.02em}
+  img{max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin-bottom:52px}
+  .section-head h2{font-size:clamp(30px,4.2vw,46px);font-weight:800}
+  .section-head p{margin-top:14px;color:var(--text-soft);font-size:18px}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:"Archivo Black",sans-serif;font-weight:400;font-size:21px;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+  .logo .oo{font-family:"Yellowtail",cursive;font-weight:400;font-size:1.3em;color:var(--orange);line-height:1;margin:0 1px;vertical-align:-1px}
+  .logo .dot{color:var(--orange)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{text-decoration:none;font-size:15px;color:var(--text-soft)}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{display:inline-block;font-family:var(--body);font-weight:500;font-size:15px;padding:12px 22px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+  .btn:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+  .btn-primary{background:#141118;color:var(--cream);border:1px solid rgba(20,17,24,.9)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(20,17,24,.28)}
+  .btn-rani{background:var(--grad-sunrise);color:var(--cream);text-shadow:0 1px 2px rgba(20,17,24,.35)}
+  .btn-rani:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(255,107,44,.35)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 40px;position:relative;overflow:visible}
+  .hero::before{content:"";position:absolute;top:-140px;left:-12%;width:72%;height:560px;background:radial-gradient(ellipse at 35% 40%,rgba(255,179,71,.30),rgba(255,107,44,.20) 40%,rgba(193,63,168,.14) 65%,transparent 80%);filter:blur(70px);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:1}
+  .hero h1{font-size:clamp(40px,5.6vw,68px);font-weight:800;color:var(--ink)}
+  .hero h1 em{font-style:normal;background:var(--grad-sunrise);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-sub{margin-top:20px;font-size:19px;color:var(--text-soft);max-width:34em}
+  .wait-form{margin-top:32px;display:flex;gap:10px;max-width:480px}
+  .wait-form input{flex:1;font-family:var(--body);font-size:16px;padding:14px 18px;border:1.5px solid var(--line-strong);border-radius:12px;background:var(--surface);color:var(--ink)}
+  .wait-form input::placeholder{color:rgba(20,17,24,.42)}
+  .wait-form input:focus{border-color:var(--orange)}
+  .form-note{margin-top:12px;font-size:14px;color:var(--text-soft)}
+  .form-success{display:none;margin-top:32px;padding:18px 22px;border-radius:var(--radius);background:var(--surface);border:1px solid #2F7A4D;font-weight:500;max-width:480px;color:var(--ink)}
+  .hero-trust{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--mono);font-size:12.5px;padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--text-soft)}
+
+  /* ---------- phone + build log (signature) ---------- */
+  .demo-col{position:relative;display:flex;justify-content:flex-end}
+  .buildlog{position:absolute;left:-62px;top:6px;z-index:3;width:240px;background:#141118;border:1px solid rgba(255,255,255,.14);color:#EFE9E2;border-radius:12px;padding:16px 16px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.9;box-shadow:0 18px 44px rgba(20,17,24,.22)}
+  .buildlog-title{display:flex;align-items:center;gap:8px;color:rgba(255,246,237,.5);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .buildlog-title::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange);animation:pulse 1.6s infinite}
+  .buildlog .log-line{opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease}
+  .buildlog .log-line.on{opacity:1;transform:none}
+  .log-line .tick{color:#5FD08A}
+  .log-line.done{color:#fff;font-weight:500}
+  .log-line.done .tick{color:var(--orange)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .phone{position:relative;z-index:2;width:300px;background:#fff;border:1.5px solid var(--line-strong);border-radius:34px;padding:12px;box-shadow:0 30px 70px rgba(20,17,24,.18);margin-top:64px}
+  .phone-screen{border-radius:24px;overflow:hidden;border:1px solid var(--line-light)}
+  .phone-url{font-family:var(--mono);font-size:11.5px;text-align:center;padding:9px;background:#F7F0E8;color:#6B655F;border-bottom:1px solid var(--line-light)}
+  .store-head{padding:18px 16px 14px;background:linear-gradient(160deg,#FFEDDC,#fff);text-align:right}
+  .store-avatar{width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:18px;margin-left:auto}
+  .store-name{font-family:var(--display);font-weight:700;font-size:17px;margin-top:10px;color:#141118}
+  .store-tag{font-size:12.5px;color:#6B655F}
+  .product{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--line-light);background:#fff}
+  .product-name{font-size:13px;font-weight:600;color:#141118}
+  .product-kind{font-family:var(--mono);font-size:10.5px;color:#8A8078}
+  .product-buy{font-size:12px;font-weight:600;background:#141118;color:var(--cream);border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .upi-row{display:flex;gap:6px;padding:12px 16px;border-top:1px solid var(--line-light);background:#FAF3EB}
+  .upi-row .chip{font-size:10.5px;padding:5px 10px;background:#fff;border:1px solid #E5DCD1;color:#4C4640}
+  .wa-toast{position:absolute;z-index:4;right:-18px;bottom:-20px;width:240px;background:#fff;border:1px solid #BFE6CF;border-left:4px solid var(--whats);border-radius:12px;padding:12px 14px;box-shadow:0 14px 34px rgba(20,17,24,.18);font-size:12.5px;color:#141118;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+  .wa-toast.on{opacity:1;transform:none}
+  .wa-toast b{color:var(--whats)}
+
+  /* ---------- ticker ---------- */
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface-2);overflow:hidden;padding:14px 0}
+  .ticker-track{display:flex;gap:44px;white-space:nowrap;font-family:var(--mono);font-size:13px;color:var(--text-soft);animation:slide 36s linear infinite;width:max-content}
+  .ticker-track b{color:var(--ink);font-weight:500}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- problem ---------- */
+  .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .p-card{border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--surface)}
+  .p-card .glyph{font-size:26px}
+  .p-card h3{font-size:21px;margin:16px 0 10px;color:var(--ink)}
+  .p-card p{font-size:15.5px;color:var(--text-soft)}
+
+  /* ---------- steps ---------- */
+  .steps{background:var(--indigo-band);color:var(--ink)}
+  .steps .eyebrow{color:var(--amber)}
+  .steps .section-head p{color:var(--text-soft)}
+  .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .step{border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px;background:var(--indigo-card)}
+  .step-num{font-family:var(--mono);font-size:12px;color:var(--amber)}
+  .step h3{font-size:19px;margin:14px 0 8px;color:var(--ink)}
+  .step p{font-size:14.5px;color:var(--text-soft)}
+  .step-time{margin-top:40px;text-align:center;font-family:var(--mono);font-size:13px;color:var(--text-soft)}
+  .step-time b{color:var(--amber);font-weight:500}
+
+  /* ---------- personas ---------- */
+  .personas{background:var(--surface-2)}
+  .cards-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .persona{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:8px}
+  .persona .glyph{font-size:26px}
+  .persona h3{font-size:18px;margin-top:8px;color:var(--ink)}
+  .persona p{font-size:14px;color:var(--text-soft);flex:1}
+  .persona .sells{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.04em}
+
+  /* ---------- layers ---------- */
+  .layer{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0;border-top:1px solid var(--line)}
+  .layer:first-of-type{border-top:none;padding-top:0}
+  .layer-num{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.12em}
+  .layer h3{font-size:clamp(24px,3vw,32px);margin:12px 0 12px;color:var(--ink)}
+  .layer p{color:var(--text-soft)}
+  .layer ul{margin-top:16px;list-style:none}
+  .layer li{padding:7px 0 7px 26px;position:relative;font-size:15.5px;color:var(--ink)}
+  .layer li::before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:700}
+  .layer-visual{border-radius:var(--radius);background:linear-gradient(rgba(20,17,24,.38),rgba(20,17,24,.38)),var(--grad-dusk);padding:26px;font-family:var(--mono);font-size:13px;line-height:2;color:rgba(255,246,237,.85)}
+  .layer-visual b{color:#fff;font-weight:500}
+  .layer-visual .accent{color:var(--amber)}
+  .flag{display:inline-block;background:rgba(255,107,44,.14);color:var(--amber);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;margin-bottom:14px}
+
+  /* ---------- india row ---------- */
+  .india-row{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 0}
+  .india-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:22px}
+  .india-item{display:flex;align-items:center;gap:10px;font-weight:500;font-size:15px;color:var(--ink)}
+  .india-item span{font-size:22px}
+
+  /* ---------- receipts (cost comparison) ---------- */
+  .receipts{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:860px;margin:0 auto}
+  .receipt{background:var(--cream);border:1px solid var(--line-light);border-radius:6px;padding:30px 28px;font-family:var(--mono);font-size:13.5px;box-shadow:0 10px 30px rgba(0,0,0,.35);position:relative;color:#4A443D}
+  .receipt::before,.receipt::after{content:"";position:absolute;left:0;right:0;height:8px;background-image:radial-gradient(circle at 6px -2px,transparent 6px,#FFF6ED 6.5px);background-size:14px 8px}
+  .receipt::before{top:-1px;transform:rotate(180deg)}
+  .receipt::after{bottom:-1px}
+  .receipt h3{font-family:var(--mono);font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:.1em;text-align:center;padding-bottom:16px;border-bottom:1.5px dashed #DCD0C2;color:#141118}
+  .r-line{display:flex;justify-content:space-between;gap:14px;padding:9px 0;color:#4A443D}
+  .r-total{display:flex;justify-content:space-between;padding-top:16px;margin-top:8px;border-top:1.5px dashed #DCD0C2;font-weight:500;color:#141118;font-size:15px}
+  .receipt-old .r-total span:last-child{color:#B3261E}
+  .receipt-new{border-color:var(--orange)}
+  .receipt-new .r-total span:last-child{color:var(--orange-deep);font-size:18px}
+  .r-foot{margin-top:14px;text-align:center;font-size:11px;color:#8F8478}
+
+  /* ---------- compare table ---------- */
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
+  table{width:100%;border-collapse:collapse;font-size:15px;min-width:640px;background:var(--surface)}
+  th,td{padding:14px 18px;text-align:center;border-bottom:1px solid var(--line)}
+  th{font-family:var(--body);font-weight:500;font-size:14px;background:var(--surface-2);color:var(--ink)}
+  td{color:var(--text-soft)}
+  td:first-child,th:first-child{text-align:left}
+  td:first-child{color:var(--ink)}
+  tr:last-child td{border-bottom:none}
+  th.stoora-col{background:var(--orange);color:#141118;font-weight:700}
+  td.stoora-col{background:rgba(255,107,44,.10);font-weight:600;color:var(--ink)}
+  .yes{color:#138A46;font-weight:700}
+  .no{color:rgba(20,17,24,.30)}
+  .table-note{margin-top:14px;font-size:13px;color:rgba(20,17,24,.50)}
+
+  /* ---------- pricing ---------- */
+  .pricing{background:var(--cream);color:#141118}
+  .pricing .section-head h2{color:#141118}
+  .pricing .section-head p{color:#5E564D}
+  .pricing .eyebrow{color:var(--orange-deep)}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .plan{background:#fff;border:1px solid var(--line-light);border-radius:16px;padding:32px 28px;display:flex;flex-direction:column}
+  .plan.popular{border:2px solid var(--orange);position:relative;box-shadow:0 14px 40px rgba(255,107,44,.18)}
+  .popular-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--orange);color:#141118;font-size:12px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap}
+  .plan h3{font-size:20px;color:#141118}
+  .plan .for{font-size:13.5px;color:#6B6259;margin-top:4px;min-height:2.6em}
+  .price{font-family:var(--display);font-size:40px;font-weight:800;margin:18px 0 2px;color:#141118}
+  .price small{font-family:var(--body);font-size:14px;font-weight:400;color:#6B6259}
+  .txn{font-family:var(--mono);font-size:12.5px;color:var(--orange-deep);margin-bottom:18px}
+  .plan ul{list-style:none;flex:1;margin-bottom:24px}
+  .plan li{padding:6px 0 6px 24px;position:relative;font-size:14.5px;color:#4C463F}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--whats);font-weight:700}
+  .pricing-note{text-align:center;margin-top:32px;font-size:14.5px;color:#5E564D}
+
+  /* ---------- faq ---------- */
+  .faq-list{max-width:720px;margin:0 auto}
+  details{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;font-weight:500;font-size:17px;padding:20px 36px 20px 0;list-style:none;position:relative;color:var(--ink)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:4px;top:16px;font-family:var(--display);font-size:24px;color:var(--orange);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 0 22px;color:var(--text-soft);font-size:15.5px;max-width:60ch}
+
+  /* ---------- final cta ---------- */
+  .final{background:var(--bg);color:var(--ink);text-align:center;padding:100px 0;position:relative;overflow:hidden}
+  .final::before{content:"";position:absolute;left:-15%;right:-15%;bottom:-55%;height:460px;background:radial-gradient(ellipse at 50% 100%,rgba(255,107,44,.30),rgba(193,63,168,.16) 55%,transparent 78%);filter:blur(60px);pointer-events:none}
+  .final .wrap{position:relative;z-index:1}
+  .final h2{font-size:clamp(32px,5vw,54px);font-weight:800}
+  .final h2 em{font-style:normal;background:var(--grad-sunrise);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .final p{margin:18px auto 0;color:var(--text-soft);max-width:36em}
+  .final .wait-form{margin:36px auto 0;justify-content:center}
+  .final .wait-form input{border-color:var(--line-strong);background:var(--surface);color:var(--ink)}
+  .final .form-note{color:var(--text-soft)}
+  .final .form-success{margin:36px auto 0;background:var(--surface);border-color:#2F7A4D;color:var(--ink)}
+
+  /* ---------- footer ---------- */
+  footer{padding:44px 0;border-top:1px solid var(--line);background:var(--bg)}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-in p{font-size:13.5px;color:rgba(20,17,24,.5)}
+  .foot-links{display:flex;gap:22px;list-style:none}
+  .foot-links a{font-size:13.5px;color:var(--text-soft);text-decoration:none}
+  .foot-links a:hover{color:var(--orange)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal,.buildlog .log-line,.wa-toast{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1080px){
+    .hero-grid{grid-template-columns:1fr;gap:64px}
+    .demo-col{margin-top:8px;max-width:620px;width:100%;margin-left:auto;margin-right:auto}
+    .buildlog{left:0}
+    .phone{margin-top:56px}
+    .cards-3,.steps-grid,.plans{grid-template-columns:1fr 1fr}
+    .cards-4{grid-template-columns:1fr 1fr}
+    .layer{grid-template-columns:1fr;gap:28px}
+    .receipts{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    section{padding:64px 0}
+    .nav-links{display:none}
+    .cards-3,.steps-grid,.plans,.cards-4{grid-template-columns:1fr}
+    .wait-form{flex-direction:column}
+    .demo-col{justify-content:center}
+    .phone{margin-top:250px;width:280px}
+    .buildlog{left:50%;transform:translateX(-50%);top:0}
+    .wa-toast{right:0}
+    .india-grid{flex-direction:column}
+  }
+
+  /* ---------- Handhold-inspired product landing treatment ---------- */
+  :root{
+    --bg:#fff;
+    --surface:#fff;
+    --surface-2:#f7f7fb;
+    --ink:#17113f;
+    --indigo:#17113f;
+    --indigo-band:#eeebff;
+    --indigo-card:#fff;
+    --orange:#ff725e;
+    --orange-deep:#c8493d;
+    --amber:#8c6dff;
+    --magenta:#ff9f8f;
+    --cream:#fffaf7;
+    --text-soft:rgba(23,17,63,.64);
+    --line:rgba(23,17,63,.12);
+    --line-strong:rgba(23,17,63,.2);
+    --line-light:#e6e4f0;
+    --grad-sunrise:linear-gradient(110deg,#ffb5a3,#ff725e 52%,#8c6dff);
+    --grad-dusk:linear-gradient(145deg,#2a2168,#17113f);
+  }
+  body{font-size:16px;background:#fff;color:var(--ink)}
+  nav{background:rgba(255,255,255,.94);border-bottom-color:rgba(23,17,63,.08)}
+  .nav-in{height:72px}
+  .logo{font-size:22px;color:var(--ink)}
+  .nav-links{gap:26px}
+  .nav-links a{font-size:14px;color:rgba(23,17,63,.72)}
+  .btn{border-radius:999px;padding:12px 20px}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-rani{background:var(--orange);color:#fff;text-shadow:none}
+  .hero{padding:96px 0 72px;text-align:center}
+  .hero::before{display:none}
+  .hero-grid{display:block;max-width:900px;margin:0 auto}
+  .hero h1{max-width:780px;margin:0 auto;font-size:clamp(46px,7vw,82px);color:var(--ink);letter-spacing:-.045em}
+  .hero-sub{max-width:620px;margin:24px auto 0;font-size:19px;color:var(--text-soft)}
+  .wait-form{margin:30px auto 0;justify-content:center}
+  .form-note{font-size:13px}
+  .hero-trust{justify-content:center;margin-top:24px}
+  .chip{border-radius:999px;background:#fff;color:var(--text-soft)}
+  .demo-col{margin:72px auto 0;max-width:840px;min-height:430px;padding:36px 62px;background:var(--indigo);border-radius:28px;justify-content:center;overflow:hidden;box-shadow:0 26px 70px rgba(23,17,63,.18)}
+  .demo-col::before{content:"AI store preview";position:absolute;top:22px;left:28px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+  .buildlog{left:32px;top:70px;width:232px;background:#292263;border-color:rgba(255,255,255,.14);box-shadow:none}
+  .phone{margin-top:0;width:300px;border:0;box-shadow:0 24px 55px rgba(0,0,0,.28)}
+  .wa-toast{right:-50px;bottom:-18px}
+  .ticker{background:#fff;border-color:rgba(23,17,63,.1);padding:16px 0}
+  .ticker-track{color:rgba(23,17,63,.56)}
+  .ticker-track b{color:var(--ink)}
+  section{padding:112px 0}
+  .section-head{max-width:680px;margin-bottom:58px}
+  .section-head h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.04em}
+  .section-head p{font-size:17px}
+  .eyebrow{color:#8c6dff;font-size:11px;letter-spacing:.14em}
+  .cards-3,.cards-4,.plans{gap:16px}
+  .p-card,.persona,.step,.plan{border-radius:12px;border-color:rgba(23,17,63,.1);box-shadow:0 10px 30px rgba(23,17,63,.04)}
+  .p-card{padding:26px;background:#fff}
+  .p-card .glyph,.persona .glyph{filter:saturate(.75)}
+  .steps{background:var(--indigo-band)}
+  .steps .step{background:#fff;border-color:rgba(23,17,63,.08)}
+  .step-num,.layer-num,.persona .sells{color:#8c6dff}
+  .step-time b{color:var(--orange)}
+  .personas{background:#fff}
+  .layer{padding:66px 0;border-top-color:rgba(23,17,63,.1)}
+  .layer-visual{background:var(--indigo);border-radius:18px;min-height:230px;display:flex;align-items:center;padding:34px;box-shadow:0 16px 36px rgba(23,17,63,.12)}
+  .india-row{background:#f7f7fb;border-color:rgba(23,17,63,.1)}
+  .india-item span{filter:saturate(.7)}
+  .receipt{box-shadow:0 12px 28px rgba(23,17,63,.08)}
+  .pricing{background:var(--indigo-band)}
+  .plan{background:#fff}
+  .plan.popular{box-shadow:0 16px 40px rgba(140,109,255,.18)}
+  .popular-tag{background:var(--orange);color:#fff}
+  .faq-list{max-width:780px}
+  summary{font-size:16px}
+  .final{background:var(--indigo);color:#fff;text-align:center;padding:120px 0}
+  .final h2{font-size:clamp(40px,6vw,70px);letter-spacing:-.045em}
+  .final p{max-width:610px;margin:20px auto 0;color:rgba(255,255,255,.72)}
+  .final .wait-form{margin-top:30px}
+  .final .form-note{color:rgba(255,255,255,.6)}
+  footer{background:#fff;color:var(--ink);border-top-color:rgba(23,17,63,.1)}
+  @media (max-width:1080px){.demo-col{padding:36px 30px}.buildlog{left:18px}}
+  @media (max-width:600px){.hero{padding-top:72px}.demo-col{padding:34px 12px 50px;min-height:620px}.buildlog{left:50%;top:56px}.phone{margin-top:250px}.wa-toast{right:-4px}.final{padding:84px 0}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="#">st<span class="oo">oo</span>ra<span class="dot">.</span>in</a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Resources</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-rani" href="#waitlist">Try for free</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">For India's 10 million creators, coaches &amp; sellers</p>
+      <h1>Your whole business. <em>Built by AI</em> in 10 minutes.</h1>
+      <p class="hero-sub">Stoora turns your Instagram into a live store — catalog, UPI checkout, GST invoices and WhatsApp order updates included. You keep creating. Your AI co-founder runs the dukaan.</p>
+
+      <form class="wait-form" data-waitlist>
+        <input type="text" name="contact" placeholder="Email or WhatsApp number" required aria-label="Email or WhatsApp number">
+        <button class="btn btn-rani" type="submit">Join the waitlist</button>
+      </form>
+      <p class="form-success" role="status">🎉 You're on the list! We'll WhatsApp you when your store is ready to build.</p>
+      <p class="form-note">Free early access for the first 500 creators · No card needed</p>
+
+      <div class="hero-trust">
+        <span class="chip">UPI-first</span>
+        <span class="chip">WhatsApp-native</span>
+        <span class="chip">GST-ready</span>
+        <span class="chip">हिन्दी + 8 languages</span>
+      </div>
+    </div>
+
+    <div class="demo-col" aria-hidden="true">
+      <div class="buildlog" id="buildlog">
+        <div class="buildlog-title">Stoora AI · building</div>
+        <div class="log-line">Scanning @riya.fit … 214 posts, 47 reels</div>
+        <div class="log-line"><span class="tick">✓</span> Brand, logo &amp; bio written</div>
+        <div class="log-line"><span class="tick">✓</span> 12 products listed &amp; priced</div>
+        <div class="log-line"><span class="tick">✓</span> E-book drafted from your reels</div>
+        <div class="log-line"><span class="tick">✓</span> UPI checkout + GST invoices on</div>
+        <div class="log-line done"><span class="tick">●</span> Live in 9m 41s ↓</div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-url">stoora.in/riya.fit</div>
+          <div class="store-head">
+            <div class="store-avatar">R</div>
+            <div class="store-name">Riya Fitness</div>
+            <div class="store-tag">Home workouts for busy women · Jaipur</div>
+          </div>
+          <div class="product">
+            <div><div class="product-name">30-Day Home Workout e-book</div><div class="product-kind">DIGITAL · MADE FROM 47 REELS</div></div>
+            <div class="product-buy">₹499</div>
+          </div>
+          <div class="product">
+            <div><div class="product-name">1:1 Diet Consultation</div><div class="product-kind">SERVICE · 45 MIN</div></div>
+            <div class="product-buy">₹999</div>
+          </div>
+          <div class="product">
+            <div><div class="product-name">Resistance Band Kit</div><div class="product-kind">PHYSICAL · COD AVAILABLE</div></div>
+            <div class="product-buy">₹349</div>
+          </div>
+          <div class="upi-row">
+            <span class="chip">UPI</span><span class="chip">GPay</span><span class="chip">PhonePe</span><span class="chip">COD</span>
+          </div>
+        </div>
+        <div class="wa-toast" id="waToast"><b>WhatsApp · Stoora</b><br>New order! Anjali bought <b>30-Day Home Workout</b> — ₹499 received via UPI ✅</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span><b>stoora.in/riya.fit</b> · fitness coach, Jaipur</span>
+    <span><b>stoora.in/meera.crafts</b> · blue pottery, Sanganer</span>
+    <span><b>stoora.in/tarot.by.ash</b> · tarot readings, Indore</span>
+    <span><b>stoora.in/chefkunal</b> · baking courses, Surat</span>
+    <span><b>stoora.in/guitar.gurukul</b> · music lessons, Kochi</span>
+    <span><b>stoora.in/desi.threads</b> · handloom sarees, Bhagalpur</span>
+    <span><b>stoora.in/riya.fit</b> · fitness coach, Jaipur</span>
+    <span><b>stoora.in/meera.crafts</b> · blue pottery, Sanganer</span>
+    <span><b>stoora.in/tarot.by.ash</b> · tarot readings, Indore</span>
+    <span><b>stoora.in/chefkunal</b> · baking courses, Surat</span>
+    <span><b>stoora.in/guitar.gurukul</b> · music lessons, Kochi</span>
+    <span><b>stoora.in/desi.threads</b> · handloom sarees, Bhagalpur</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">The problem</p>
+      <h2>Talent isn't the problem. Infrastructure is.</h2>
+      <p>You already have the audience and the skill. What you're running your business on is DMs, screenshots and a notebook.</p>
+    </div>
+    <div class="cards-3">
+      <div class="p-card reveal">
+        <div class="glyph">📥</div>
+        <h3>Orders live in your DMs</h3>
+        <p>Requests buried between comments and collabs. No catalog, no order history — one missed message is one lost customer.</p>
+      </div>
+      <div class="p-card reveal">
+        <div class="glyph">🧾</div>
+        <h3>Payments are screenshots</h3>
+        <p>"Bhaiya, GPay kar diya" plus a blurry screenshot is not a payment system. No invoices, no records, no way to grow.</p>
+      </div>
+      <div class="p-card reveal">
+        <div class="glyph">🔧</div>
+        <h3>Tools weren't built for you</h3>
+        <p>₹2,000+/month store builders that take days to set up — card-first, English-first, and priced for businesses that already made it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="steps" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">How it works · sirf 4 steps</p>
+      <h2>From Instagram to income, in one sitting.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">STEP 1</div>
+        <h3>Share your Instagram</h3>
+        <p>Or answer five quick questions. That's all the "setup" there is.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">STEP 2</div>
+        <h3>AI builds your store</h3>
+        <p>Branding, product listings, prices, copy and checkout — assembled from the content you already post.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">STEP 3</div>
+        <h3>Approve &amp; share</h3>
+        <p>Review your store, tweak anything, then drop your stoora.in link in bio and on WhatsApp.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">STEP 4</div>
+        <h3>Get paid to UPI</h3>
+        <p>Customers pay by UPI or COD. GST invoice sent automatically. Order updates on WhatsApp.</p>
+      </div>
+    </div>
+    <p class="step-time reveal">Average time from sign-up to live store: <b>~10 minutes</b></p>
+  </div>
+</section>
+
+<!-- ============ PERSONAS ============ -->
+<section class="personas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Who it's for</p>
+      <h2>One stack for every hustle.</h2>
+      <p>Physical products, digital downloads, courses and services — sold from the same store. No other Indian platform does all four.</p>
+    </div>
+    <div class="cards-4">
+      <div class="persona reveal">
+        <div class="glyph">🏋️</div>
+        <h3>Fitness &amp; wellness creators</h3>
+        <p>Your reels become e-books and plans; your DMs become paid consultations.</p>
+        <div class="sells">SELLS: DIGITAL + SERVICES</div>
+      </div>
+      <div class="persona reveal">
+        <div class="glyph">🏺</div>
+        <h3>Artisans &amp; D2C makers</h3>
+        <p>Photos become polished listings with COD, shipping and GST handled for you.</p>
+        <div class="sells">SELLS: PHYSICAL</div>
+      </div>
+      <div class="persona reveal">
+        <div class="glyph">📚</div>
+        <h3>Coaches &amp; educators</h3>
+        <p>Your YouTube playlist becomes a structured mini-course with UPI checkout.</p>
+        <div class="sells">SELLS: COURSES</div>
+      </div>
+      <div class="persona reveal">
+        <div class="glyph">🔮</div>
+        <h3>Consultants &amp; readers</h3>
+        <p>Astrologers, designers, tutors — bookable 1:1 sessions with payment upfront.</p>
+        <div class="sells">SELLS: SERVICES</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THREE LAYERS ============ -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">What the AI actually does</p>
+      <h2>Three employees you could never afford. One subscription you can.</h2>
+    </div>
+
+    <div class="layer reveal">
+      <div>
+        <div class="layer-num">LAYER 01 · THE BUILDER</div>
+        <h3>AI Store Builder</h3>
+        <p>Sign up, connect Instagram, and watch a complete storefront assemble itself at stoora.in/yourname — brand, bio, catalog, prices and checkout, written and designed for you.</p>
+        <ul>
+          <li>Live store link in ~10 minutes</li>
+          <li>UPI, GPay, PhonePe and COD from day one</li>
+          <li>GST invoices generated automatically</li>
+        </ul>
+      </div>
+      <div class="layer-visual">
+        <b>input</b> → your Instagram handle<br>
+        <span class="accent">stoora.ai</span> → scans posts, reels &amp; highlights<br>
+        <span class="accent">stoora.ai</span> → writes brand, bio &amp; product copy<br>
+        <b>output</b> → live store · <b>stoora.in/you</b>
+      </div>
+    </div>
+
+    <div class="layer reveal">
+      <div>
+        <span class="flag">Nobody else does this — Indian or global</span>
+        <div class="layer-num">LAYER 02 · THE PRODUCT MAKER</div>
+        <h3>AI Product Creator</h3>
+        <p>The real blocker isn't the missing store — it's the missing product. Stoora manufactures sellable products from content you've already made.</p>
+        <ul>
+          <li>60 fitness reels → a "30-Day Home Workout" e-book</li>
+          <li>A YouTube playlist → a structured mini-course</li>
+          <li>Your FAQs and DMs → a paid guide or template pack</li>
+        </ul>
+      </div>
+      <div class="layer-visual">
+        <b>input</b> → 47 reels, 12 carousels, 6 lives<br>
+        <span class="accent">stoora.ai</span> → extracts, structures &amp; designs<br>
+        <b>output</b> → 68-page e-book · priced ₹499<br>
+        <b>time</b> → while you slept 😴
+      </div>
+    </div>
+
+    <div class="layer reveal">
+      <div>
+        <div class="layer-num">LAYER 03 · THE GROWTH ENGINE</div>
+        <h3>AI Growth Engine</h3>
+        <p>Marketing that runs itself. Your AI drafts the campaigns, you tap approve on WhatsApp, and it handles the rest — in your language, in your voice.</p>
+        <ul>
+          <li>WhatsApp broadcasts &amp; abandoned-cart nudges</li>
+          <li>Festival &amp; launch campaigns, written for you</li>
+          <li>Meta ads pipeline — AI writes, targets and reports</li>
+        </ul>
+      </div>
+      <div class="layer-visual">
+        <span class="accent">stoora.ai</span> → "Diwali sale draft ready. Send to 412 customers?"<br>
+        <b>you</b> → tap ✓ on WhatsApp<br>
+        <b>result</b> → 38 orders · ₹19,462 collected via UPI
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDIA ROW ============ -->
+<div class="india-row">
+  <div class="wrap india-grid">
+    <div class="india-item"><span>💸</span> UPI-first checkout</div>
+    <div class="india-item"><span>📦</span> Cash on delivery</div>
+    <div class="india-item"><span>🧾</span> Automatic GST invoices</div>
+    <div class="india-item"><span>🗣️</span> हिन्दी + regional languages</div>
+    <div class="india-item"><span>💬</span> WhatsApp-native</div>
+  </div>
+</div>
+
+<!-- ============ COST COMPARISON ============ -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">The math</p>
+      <h2>The old stack vs. your new co-founder.</h2>
+      <p>Running a real online business today means renting five tools and two freelancers. Stoora replaces the bill.</p>
+    </div>
+    <div class="receipts">
+      <div class="receipt receipt-old reveal">
+        <h3>Doing it the old way</h3>
+        <div class="r-line"><span>Store builder subscription</span><span>₹2,000+</span></div>
+        <div class="r-line"><span>Course/community platform</span><span>₹1,500+</span></div>
+        <div class="r-line"><span>Designer for branding</span><span>₹5,000+</span></div>
+        <div class="r-line"><span>Marketing/ads freelancer</span><span>₹6,000+</span></div>
+        <div class="r-line"><span>Invoicing &amp; bookkeeping app</span><span>₹500+</span></div>
+        <div class="r-line"><span>Your weekends</span><span>priceless</span></div>
+        <div class="r-total"><span>PER MONTH</span><span>₹15,000+</span></div>
+        <div class="r-foot">* typical costs, and it still doesn't talk to WhatsApp</div>
+      </div>
+      <div class="receipt receipt-new reveal">
+        <h3>Doing it with Stoora</h3>
+        <div class="r-line"><span>AI store builder</span><span>included</span></div>
+        <div class="r-line"><span>AI product creator</span><span>included</span></div>
+        <div class="r-line"><span>AI marketing engine</span><span>included</span></div>
+        <div class="r-line"><span>UPI + COD + GST invoices</span><span>included</span></div>
+        <div class="r-line"><span>WhatsApp order updates</span><span>included</span></div>
+        <div class="r-line"><span>Setup time</span><span>10 min</span></div>
+        <div class="r-total"><span>PER MONTH</span><span>from ₹299</span></div>
+        <div class="r-foot">* plus a small per-sale fee that shrinks as you grow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON TABLE ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Why not the others?</p>
+      <h2>Every other tool solves one slice.</h2>
+    </div>
+    <div class="table-scroll reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>What you need</th>
+            <th class="stoora-col">Stoora</th>
+            <th>Global store builders</th>
+            <th>Community apps</th>
+            <th>Link-in-bio tools</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Physical products</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Digital products &amp; courses</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Services &amp; 1:1 bookings</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>AI creates your product for you</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>UPI-first + COD + GST</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td>partly</td><td>partly</td></tr>
+          <tr><td>WhatsApp-native workflow</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td>partly</td><td><span class="no">✗</span></td></tr>
+          <tr><td>Hindi + regional languages</td><td class="stoora-col"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Starting price</td><td class="stoora-col">₹299/mo</td><td>₹2,000+/mo</td><td>₹999+/mo</td><td>free + 10–20% cut</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Categories shown as typical capability of leading tools in each segment.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Pricing</p>
+      <h2>Priced like a chai subscription, not a software contract.</h2>
+      <p>Every plan includes the full store. As you sell more, upgrading literally saves you money — the per-sale fee drops.</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>Basic</h3>
+        <p class="for">For new creators making their first sales</p>
+        <div class="price">₹299 <small>/month</small></div>
+        <div class="txn">+ 7% per sale</div>
+        <ul>
+          <li>AI-built store at stoora.in/you</li>
+          <li>Sell all four product types</li>
+          <li>UPI, COD &amp; GST invoices</li>
+          <li>WhatsApp order alerts</li>
+        </ul>
+        <a class="btn btn-primary" href="#waitlist">Join waitlist</a>
+      </div>
+      <div class="plan popular reveal">
+        <span class="popular-tag">Most popular</span>
+        <h3>Growth</h3>
+        <p class="for">For consistent sellers ready to scale</p>
+        <div class="price">₹799 <small>/month</small></div>
+        <div class="txn">+ 5% per sale</div>
+        <ul>
+          <li>Everything in Basic</li>
+          <li>AI Product Creator</li>
+          <li>AI WhatsApp &amp; email campaigns</li>
+          <li>Regional-language storefront</li>
+        </ul>
+        <a class="btn btn-rani" href="#waitlist">Join waitlist</a>
+      </div>
+      <div class="plan reveal">
+        <h3>Business</h3>
+        <p class="for">For D2C brands &amp; full-time creators</p>
+        <div class="price">₹2,499 <small>/month</small></div>
+        <div class="txn">+ 3% per sale</div>
+        <ul>
+          <li>Everything in Growth</li>
+          <li>AI Meta-ads pipeline</li>
+          <li>Priority support on WhatsApp</li>
+          <li>Custom domain</li>
+        </ul>
+        <a class="btn btn-primary" href="#waitlist">Join waitlist</a>
+      </div>
+    </div>
+    <p class="pricing-note reveal">Join the waitlist to lock in launch pricing before public release.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2>Sawaal? Jawaab.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details>
+        <summary>When does Stoora launch?</summary>
+        <p>We're onboarding the first 500 creators from the waitlist in small batches. Join now and we'll message you on WhatsApp when it's your turn to build.</p>
+      </details>
+      <details>
+        <summary>What can I sell on Stoora?</summary>
+        <p>Everything, in one store: physical products (with COD), digital downloads, courses, and bookable services. You don't need separate tools for each.</p>
+      </details>
+      <details>
+        <summary>Do I need a website or any tech skills?</summary>
+        <p>No. If you can post on Instagram, you can run a Stoora store. The AI builds everything; you just review and approve — from your phone.</p>
+      </details>
+      <details>
+        <summary>How do payments and invoices work?</summary>
+        <p>Customers pay by UPI (GPay, PhonePe, Paytm) or choose cash on delivery. Money settles to your account, and a GST-compliant invoice is generated and sent automatically with every order.</p>
+      </details>
+      <details>
+        <summary>Is my Instagram account safe?</summary>
+        <p>Yes. Stoora only reads your public posts to build your store — we never post, message, or act on your account.</p>
+      </details>
+      <details>
+        <summary>Which languages does my store support?</summary>
+        <p>English and Hindi at launch, with major regional languages rolling out right after — your store, product pages and WhatsApp messages included.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final" id="waitlist">
+  <div class="wrap">
+    <h2 class="reveal">Be one of the <em>first 500</em> stores.</h2>
+    <p class="reveal">Your audience is already following you. Give them somewhere to buy. Early creators get founding-member pricing and a hand-held onboarding on WhatsApp.</p>
+    <form class="wait-form reveal" data-waitlist>
+      <input type="text" name="contact" placeholder="Email or WhatsApp number" required aria-label="Email or WhatsApp number">
+      <button class="btn btn-rani" type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-success" role="status">🎉 You're on the list! We'll WhatsApp you when your store is ready to build.</p>
+    <p class="form-note">Free early access · No card needed · Made in India 🇮🇳</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <p>© 2026 Stoora · The AI Business OS for India's creator economy<br>By the team behind Hastakala Crafts &amp; the Bhavani AI engine.</p>
+    <ul class="foot-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="mailto:hello@stoora.in">hello@stoora.in</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  /* Waitlist forms.
+     TODO before going live: point these at a real backend.
+     Easiest options: Formspree (action="https://formspree.io/f/YOUR_ID" method="POST")
+     or a Google Form / Sheet via Apps Script. For now, submissions show a success
+     message locally and are NOT stored anywhere. */
+  document.querySelectorAll("[data-waitlist]").forEach(function(form){
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      form.style.display="none";
+      form.nextElementSibling.style.display="block";
+    });
+  });
+
+  var reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Scroll reveals */
+  if(!reduceMotion && "IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}
+      });
+    },{threshold:.12});
+    document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});
+  }
+
+  /* Hero build-log sequence */
+  var logLines=document.querySelectorAll("#buildlog .log-line");
+  var waToast=document.getElementById("waToast");
+  if(reduceMotion){
+    logLines.forEach(function(l){l.classList.add("on");});
+    waToast.classList.add("on");
+  }else{
+    var t=600;
+    logLines.forEach(function(line){
+      setTimeout(function(){line.classList.add("on");},t);
+      t+=700;
+    });
+    setTimeout(function(){waToast.classList.add("on");},t+600);
+  }
+</script>
+</body>
+</html>
