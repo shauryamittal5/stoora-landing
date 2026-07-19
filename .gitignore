@@ -1,6 +1,8 @@
 .next/
 node_modules/
 out/
+.data/
+.claude/
 .DS_Store
 .env*
 !.env.example
